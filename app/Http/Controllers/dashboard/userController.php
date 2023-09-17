@@ -4,24 +4,23 @@ namespace App\Http\Controllers\dashboard;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
 
-class dashboardController extends Controller
+class userController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-     public function __construct()
+    public function index(user $users)
     {
-        $this->middleware('auth');
-    }
-
-    public function index()
-    {
-        $active = 'Dashboard';
-        return view('home', ['active' => $active]);
+        $active = 'Users';
+        $users = $users->paginate(10);
+        return view('dashboard/user/list', [
+            'users'=>$users,
+            'active' => $active
+        ]);
     }
 
     /**
