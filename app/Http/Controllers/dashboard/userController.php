@@ -13,13 +13,22 @@ class userController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(user $users)
+    public function index(Request $request, user $users)
     {
+
+        $q = $request->input('q');
         $active = 'Users';
-        $users = $users->paginate(10);
+        $users = $users->when($q, function($query) use ($q){
+            return $query   ->where ('name','like','%'.$q.'%')
+                            ->orwhere('email','like','%'.$q.'%');
+        })
+            ->paginate(10);
+
+        $request = $request->all();
         return view('dashboard/user/list', [
             'users'=>$users,
-            'active' => $active
+            'active' => $active,
+            'request' => $request
         ]);
     }
 
@@ -63,7 +72,9 @@ class userController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        $active = 'Users';
+        return view('dashboard/user/form', ['user' =>$user, 'active'=>$active]);
     }
 
     /**
@@ -75,7 +86,11 @@ class userController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->save();
+        return redirect('dashboard/users');
     }
 
     /**

@@ -64,7 +64,7 @@ class dashboardController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
