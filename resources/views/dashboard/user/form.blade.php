@@ -8,11 +8,11 @@
                 <h3>Users</h3>
             </div>
             <div class="col-4 text-right">
-                <button class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#deleteModal">Delete</button>
+                <button class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-trash mr-2"></i>Delete</button>
             </div>
         </div>
     </div>
-    <div class="card-body p-0">
+    <div class="card-body">
         <div class="row">
             <div class="col-md-8 offset-md-2">
                 <form method="POST" action="{{ url('dashboard/user/update/'.$user->id) }}">
@@ -32,8 +32,9 @@
                             <span class="text-danger">{{$message}}</span>
                         @enderror
                     </div>
-                    <div class="form-group">
-                        <button class="btn btn-success btn-sm">Update</button>
+                    <div class="form-group mb-0">
+                        <button type="button" onclick="window.history.back()" class="btn btn-danger btn-sm">Cancel</button>
+                        <button type="submit" class="btn btn-success btn-sm"><i class="fas fa-pen mr-2"></i>Update</button>
                     </div>
                 </form>
             </div>
@@ -54,7 +55,7 @@
                 <form action="{{url ('dashboard/user/delete/'.$user->id)}}" method="POST">
                     @csrf
                     @method('delete')
-                    <button class="btn btn-danger btn-sm">Delete</button>
+                    <button class="btn btn-danger btn-sm"><i class="fas fa-trash mr-2"></i>Delete</button>
                 </form>
             </div>
         </div>
